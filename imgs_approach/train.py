@@ -20,7 +20,7 @@ np.random.seed(8)
 
 IMAGE_SIZE = 300
 IMG_SHAPE = (IMAGE_SIZE, IMAGE_SIZE, 3)
-BATCH_SIZE = 64 * 3
+BATCH_SIZE = 64 * 2
 
 FILTERS = 64
 DROPOUT = 0.1
@@ -102,12 +102,12 @@ else:
     base_model,
     tf.keras.layers.GlobalAveragePooling2D(),
     tf.keras.layers.Dropout(0.2),
-    tf.keras.layers.Dense(units=2560,
+    tf.keras.layers.Dense(units=2560 // 4,
                           activation='tanh'),
     tf.keras.layers.BatchNormalization(momentum=0.9),
-    tf.keras.layers.Dense(units=1280,
+    tf.keras.layers.Dense(units=1280 // 4,
                           activation='tanh'),
-    tf.keras.layers.Dense(units=128,
+    tf.keras.layers.Dense(units=128 // 4,
                           activation='relu'),
     tf.keras.layers.Dense(units=2,
                           activation='sigmoid')
