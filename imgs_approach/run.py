@@ -55,6 +55,7 @@ if __name__ == "__main__":
 
   
   f = open('submission.csv', 'w')
+  t = time.time()
   for file in os.listdir(dataset_path):
       #t = time.time()
       img = cv2.imread('{}/{}'.format(dataset_path, file))
@@ -66,6 +67,7 @@ if __name__ == "__main__":
       f.write('{}	{}\n'.format(file, result == 1))
       #print(time.time() - t)
   f.close()
+  print(time.time() - t)
       
 
     
