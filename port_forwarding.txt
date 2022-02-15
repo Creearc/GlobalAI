@@ -1,0 +1,36 @@
+
+sudo iptables -A FORWARD   -p tcp --syn --dport 9081 -m conntrack --ctstate NEW -j ACCEPT
+sudo iptables -A FORWARD   -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
+sudo iptables -A FORWARD  -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
+
+sudo iptables -t nat -A PREROUTING    -p tcp --dport 9081 -j DNAT --to-destination 192.168.68.202:9081
+sudo iptables -t nat -A POSTROUTING   -p tcp --dport 9081 -d 192.168.68.202 -j SNAT --to-source 192.168.68.10
+
+
+
+
+
+#######################################################
+
+sudo iptables -A FORWARD   -p tcp --syn --dport 8080 -m conntrack --ctstate NEW -j ACCEPT
+sudo iptables -t nat -A PREROUTING -p tcp -d 192.168.68.9 --dport 9081 -j DNAT --to-destination 192.168.68.202:8080
+sudo iptables -t nat -A POSTROUTING -p tcp --sport 8080 --dst 192.168.68.202 -j SNAT --to-source 192.168.68.9:9081
+
+
+
+
+
+######################################################
+
+iptables -t nat -A PREROUTING -j DNAT -d 10.0.0.132 -p tcp --dport 29418 --to 10.0.0.133
+
+
+
+# Удаление всех правил в одну строку
+sudo iptables -F && sudo iptables -P INPUT ACCEPT && sudo iptables -P FORWARD ACCEPT && sudo iptables -P OUTPUT ACCEPT && sudo iptables -t nat -F && sudo iptables -t mangle -F && sudo iptables -F  && sudo iptables -X
+
+
+
+
+
+
