@@ -37,7 +37,7 @@ for file in os.listdir(dataset_path):
 
     if y == 1:
       counter += 1
-    f.write('{}	{}\n'.format(file, y == 1))
+    f.write('{}\n'.format(y == 1))
     #print(time.time() - t)
 f.close()
 print(time.time() - t)
