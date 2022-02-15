@@ -22,7 +22,8 @@ height, width = 300, 300
 
 dataset_path = 'test'
 
-  
+counter = 0
+
 f = open('submission.csv', 'w')
 t = time.time()
 for file in os.listdir(dataset_path):
@@ -33,8 +34,11 @@ for file in os.listdir(dataset_path):
     img_n = np.expand_dims(img_n, 0)
 
     y = model.predict_classes(img_n)[0]
-    print(y, y  == 1)
-    f.write('{}	{}\n'.format(file, y== 1))
+
+    if y == 1:
+      counter += 1
+    f.write('{}	{}\n'.format(file, y == 1))
     #print(time.time() - t)
 f.close()
 print(time.time() - t)
+print(counter)
