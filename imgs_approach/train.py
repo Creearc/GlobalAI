@@ -109,7 +109,7 @@ else:
                           activation='tanh'),
     tf.keras.layers.Dense(units=128,
                           activation='relu'),
-    tf.keras.layers.Dense(units=3,
+    tf.keras.layers.Dense(units=2,
                           activation='sigmoid')
   ])
 
