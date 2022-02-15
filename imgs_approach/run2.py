@@ -19,24 +19,21 @@ labels = [0, 1]
 height, width = 300, 300
 #height, width = 512, 512
 
-predictions = []
-labels = []
+dataset_path = 'test'
 
-for folder in os.listdir(dataset_path):
-  for file in os.listdir('{}/{}'.format(dataset_path, folder)):
-    
-    img = cv2.imread('{}/{}/{}'.format(dataset_path, folder, file),
-                     cv2.IMREAD_COLOR)
-    
+  
+f = open('submission.csv', 'w')
+t = time.time()
+for file in os.listdir(dataset_path):
+    #t = time.time()
+    img = cv2.imread('{}/{}'.format(dataset_path, file, cv2.IMREAD_COLOR))
+
     img_n = cv2.resize(img, (width, height))
     img_n = np.expand_dims(img_n, 0)
 
     y = model.predict_classes(img_n)[0]
-    predictions.append(str(y))
-    labels.append(str(folder))
-
-
-accuracy = accuracy_score(labels, predictions)
-print('Result accuracy: {}'.format(accuracy))
-score = f1_score(labels, predictions, average='weighted')
-print('Result F1: {}'.format(score))
+    print(y, y  == 1)
+    f.write('{}	{}\n'.format(file, y== 1))
+    #print(time.time() - t)
+f.close()
+print(time.time() - t)
