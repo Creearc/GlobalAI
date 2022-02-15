@@ -18,7 +18,7 @@ dataset_path = 'dataset'
 tf.random.set_seed(8)
 np.random.seed(8)
 
-IMAGE_SIZE = 448
+IMAGE_SIZE = 300
 IMG_SHAPE = (IMAGE_SIZE, IMAGE_SIZE, 3)
 BATCH_SIZE = 32
 
