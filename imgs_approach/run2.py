@@ -14,7 +14,7 @@ tf.config.experimental.set_memory_growth(gpus[0], True)
 
 dataset_path = 'dataset'
 
-model = tf.keras.models.load_model('results/0.9452383649588333__300_3_2_1|1_64_0.1')
+model = tf.keras.models.load_model('results/0.9441570560474347__300_3_2_1|1_64_0.1')
 
 labels = [0, 1]
 height, width = 300, 300
