@@ -29,8 +29,8 @@ K_PARTS = 3
 VALIDATION_SPLIT = 0.0
 
 FREEZE_EPOCHS = 2
-UNFREEZE_CONFIG = [(100, 1e-5),
-                   (2, 1e-8)]
+UNFREEZE_CONFIG = [(1, 1e-5),
+                   (1, 1e-8)]
 
 args = [IMAGE_SIZE, K_PARTS, FREEZE_EPOCHS,
         '|'.join([str(i[0]) for i in UNFREEZE_CONFIG]),
@@ -137,7 +137,7 @@ model.summary()
 
 
 LR = 1e-5
-for period in range(30):
+for period in range(1):
     print('PERIOD {}'.format(period))
     for k, training_data, validation_data in k_fold_cross_val(data_parts, K_PARTS):
       training_data = training_data.sample(frac=1)
