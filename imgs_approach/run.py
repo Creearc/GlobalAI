@@ -63,8 +63,8 @@ if __name__ == "__main__":
       img = img.resize((width, height))
     
       result = process_image(interpreter, img, input_index)
-      print(result)
-      f.write('{}	{}\n'.format(file, result))
+      print(result == 0)
+      f.write('{}	{}\n'.format(file, result == 0))
       #print(time.time() - t)
   f.close()
       
