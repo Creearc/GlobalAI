@@ -26,6 +26,8 @@ counter = 0
 
 f = open('submission.csv', 'w')
 t = time.time()
+
+f.write('Active')
 for file in os.listdir(dataset_path):
     #t = time.time()
     img = cv2.imread('{}/{}'.format(dataset_path, file, cv2.IMREAD_COLOR))
