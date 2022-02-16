@@ -25,7 +25,7 @@ BATCH_SIZE = 64 * 2
 FILTERS = 64
 DROPOUT = 0.1
 
-K_PARTS = 3
+K_PARTS = 5
 VALIDATION_SPLIT = 0.0
 
 FREEZE_EPOCHS = 2
@@ -96,7 +96,7 @@ else:
                                                  include_top=False,
                                                  weights='imagenet')
 
-  base_model.trainable = False
+  base_model.trainable = not False
 
   model = tf.keras.Sequential([
     base_model,
@@ -113,30 +113,10 @@ else:
                           activation='sigmoid')
   ])
 
-
-##input_layer = layers.Input(shape=1280)
-##conc = layers.Dense(2560, activation='relu')(input_layer)
-##conc = layers.BatchNormalization(momentum=0.9)(conc)
-##conc = layers.Dense(1280, activation='tanh')(conc)
-##conc = layers.Dense(128, activation='relu')(conc)
-##conc = layers.Dropout(0.1)(conc)
-##conc = layers.Dense(1, activation='sigmoid')(conc)
-##
-##conc = layers.concatenate([conc for i in range(3)], axis=1)
-##
-##nikita_nets = tf.keras.Model(input_layer, conc)
-##
-##model = tf.keras.Sequential([
-##  base_model,
-##  tf.keras.layers.GlobalAveragePooling2D(),
-##  tf.keras.layers.Dropout(0.1),
-##  nikita_nets
-##  ])
-
 model.summary()
 
 
-LR = 1e-5
+LR = 1e-6
 for period in range(1):
     print('PERIOD {}'.format(period))
     for k, training_data, validation_data in k_fold_cross_val(data_parts, K_PARTS):
