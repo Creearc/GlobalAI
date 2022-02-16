@@ -28,7 +28,7 @@ DROPOUT = 0.1
 K_PARTS = 5
 VALIDATION_SPLIT = 0.0
 
-FREEZE_EPOCHS = 20
+FREEZE_EPOCHS = 40
 UNFREEZE_CONFIG = [(1, 1e-5),
                    (1, 1e-8)]
 
@@ -102,12 +102,12 @@ else:
     base_model,
     tf.keras.layers.GlobalAveragePooling2D(),
     tf.keras.layers.Dropout(0.2),
-    tf.keras.layers.Dense(units=2560 // 4,
+    tf.keras.layers.Dense(units=2560 ,
                           activation='tanh'),
     tf.keras.layers.BatchNormalization(momentum=0.9),
-    tf.keras.layers.Dense(units=1280 // 4,
+    tf.keras.layers.Dense(units=1280 ,
                           activation='tanh'),
-    tf.keras.layers.Dense(units=128 // 4,
+    tf.keras.layers.Dense(units=128 ,
                           activation='relu'),
     tf.keras.layers.Dense(units=2,
                           activation='sigmoid')
