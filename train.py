@@ -10,11 +10,7 @@ import pandas as pd
 import numpy as np
 
 import names
-
-df = pd.read_csv('train.csv')
 discr_calc = MolecularDescriptorCalculator(names._names)
-
-features = []
 
 def smi_to_descriptors(smile):
     mol = Chem.MolFromSmiles(smile)
@@ -55,19 +51,26 @@ def input_fn(features, labels, shuffle, num_epochs, batch_size):
   return dataset
 
 
+df = pd.read_csv('train.csv')
+
+features = []
+
 for elem in df['Smiles']:
     features.append(smi_to_descriptors(elem))
 
-train = pd.DataFrame(data = features , columns=names._names)
+train = pd.DataFrame(data = features, columns=names._names)
 train['Active'] = df['Active'].apply(lambda x: 1 if x else 0)
+
+print(train.shape[0])
 
 X = train.iloc[:,:-1]
 y = train.iloc[:,-1]
 
-print(X)
 
 input_layer = layers.Input(shape=192)
-conc = layers.Dense(1, activation='softmax')(input_layer)
+conc = layers.Dense(192*2, activation='tanh')(input_layer)
+conc = layers.Dense(192, activation='tanh')(conc)
+conc = layers.Dense(1, activation='softmax')(conc)
 model = tf.keras.Model(input_layer, conc)
 
 model.summary()
@@ -77,14 +80,20 @@ BATCH_SIZE = 32
 EPOCHS = 10
 LR = 1e-5
 model.compile(optimizer=tf.keras.optimizers.Adam(LR),
-                      loss=tf.keras.losses.CategoricalCrossentropy(label_smoothing=0.1),
+                      loss='binary_crossentropy',
                       metrics=['accuracy'])
 
-training_dataset = input_fn(features=X.values,
-                    labels=y,
+training_dataset = input_fn(features=train_X.values,
+                    labels=train_y,
                     shuffle=True,
                     num_epochs=EPOCHS,
                     batch_size=BATCH_SIZE)
+
+validation_dataset = input_fn(features=eval_X.values,
+                    labels=eval_y,
+                    shuffle=False,
+                    num_epochs=EPOCHS,
+                    batch_size=num_eval_examples)
 
 model.fit(training_dataset,
           steps_per_epoch=len(training_dataset),
