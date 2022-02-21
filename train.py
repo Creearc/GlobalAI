@@ -80,7 +80,6 @@ print(eval_X)
 
 input_layer = layers.Input(shape=192)
 conc = layers.Dense(192*2, activation='tanh')(input_layer)
-conc = layers.BatchNormalization(momentum=0.99)(conc)
 conc = layers.Dense(192, activation='tanh')(conc)
 conc = layers.Dense(2, activation='relu')(conc)
 conc = layers.Dense(1, activation='softmax')(conc)
