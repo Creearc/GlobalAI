@@ -35,7 +35,7 @@ y = train.iloc[:,-1]
 print(X)
 
 input_layer = layers.Input(shape=192)
-conc = layers.Dense(1, activation='softmax')(conc)
+conc = layers.Dense(1, activation='softmax')(input_layer)
 model = tf.keras.Model(input_layer, conc)
 
 model.summary()
