@@ -101,7 +101,7 @@ validation_dataset = input_fn(features=eval_X.values,
                     labels=eval_y,
                     shuffle=False,
                     num_epochs=EPOCHS,
-                    batch_size=num_eval_examples)
+                    batch_size=BATCH_SIZE)
 
 model.fit(training_dataset,
           steps_per_epoch=len(training_dataset),
