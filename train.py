@@ -63,13 +63,18 @@ train['Active'] = df['Active'].apply(lambda x: 1 if x else 0)
 
 print(train)
 train = train.sample(frac=1)
-print(train)
 
 l = train.shape[0]
+l = int(l * 0.8)
 
-X = train.iloc[:,:-1]
-y = train.iloc[:,-1]
+train_X = train.iloc[:l, :-1]
+train_y = train.iloc[:l, -1]
 
+eval_X = train.iloc[l:, :-1]
+eval_y = train.iloc[l:, -1]
+
+print(train_X)
+print(eval_X)
 
 ##input_layer = layers.Input(shape=192)
 ##conc = layers.Dense(192*2, activation='tanh')(input_layer)
