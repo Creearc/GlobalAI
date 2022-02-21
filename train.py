@@ -1,3 +1,6 @@
+import os
+os.environ['CUDA_VISIBLE_DEVICES'] = '0'
+os.environ['TF_FORCE_GPU_ALLOW_GROWTH'] = 'true'
 import tensorflow as tf
 assert float(tf.__version__[:3]) >= 2.3
 from tensorflow.keras import datasets, layers, models, losses
@@ -77,15 +80,17 @@ print(eval_X)
 
 input_layer = layers.Input(shape=192)
 conc = layers.Dense(192*2, activation='tanh')(input_layer)
+conc = layers.BatchNormalization(momentum=0.99)(conc)
 conc = layers.Dense(192, activation='tanh')(conc)
+conc = layers.Dense(2, activation='relu')(conc)
 conc = layers.Dense(1, activation='softmax')(conc)
 model = tf.keras.Model(input_layer, conc)
 
 model.summary()
 
-BATCH_SIZE = 32
+BATCH_SIZE = 32 * 4
 
-EPOCHS = 10
+EPOCHS = 100
 LR = 1e-5
 model.compile(optimizer=tf.keras.optimizers.Adam(LR),
                       loss='binary_crossentropy',
