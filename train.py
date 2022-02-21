@@ -1,3 +1,7 @@
+import tensorflow as tf
+assert float(tf.__version__[:3]) >= 2.3
+from tensorflow.keras import datasets, layers, models, losses
+
 from rdkit import Chem
 from rdkit.Chem import rdMolDescriptors
 from rdkit.ML.Descriptors.MoleculeDescriptors import MolecularDescriptorCalculator
