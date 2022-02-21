@@ -22,7 +22,7 @@ def smi_to_descriptors(smile):
 for elem in df['Smiles']:
     features.append(smi_to_descriptors(elem))
 
-train = pd.DataFrame(data = features , columns=_names)
+train = pd.DataFrame(data = features , columns=names._names)
 train['Active'] = df['Active'].apply(lambda x: 1 if x else 0)
 
 X = train.iloc[:,:-1]
