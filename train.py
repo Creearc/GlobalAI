@@ -29,3 +29,21 @@ X = train.iloc[:,:-1]
 y = train.iloc[:,-1]
 
 print(X)
+
+input_layer = layers.Input(shape=192)
+conc = layers.Dense(CLASSES_NUM, activation='softmax')(conc)
+model = tf.keras.Model(input_layer, conc)
+
+model.summary()
+
+EPOCHS = 10
+LR = 1e-5
+model.compile(optimizer=tf.keras.optimizers.Adam(LR),
+                      loss=tf.keras.losses.CategoricalCrossentropy(label_smoothing=0.1),
+                      metrics=['accuracy'])
+
+model.fit(X,
+          steps_per_epoch=len(X),
+          epochs=EPOCHS,
+          validation_data=X,
+          validation_steps=len(X))
