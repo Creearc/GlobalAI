@@ -80,8 +80,11 @@ print(eval_X)
 
 input_layer = layers.Input(shape=192)
 conc = layers.Dense(192*2, activation='tanh')(input_layer)
-conc = layers.Dense(192, activation='tanh')(conc)
-conc = layers.Dense(2, activation='relu')(conc)
+conc = layers.LeakyReLU(0.2)(conc)
+conc = layers.Dropout(0.1)(conc)
+conc = layers.Dense(192*2, activation='tanh')(conc)
+conc = layers.LeakyReLU(0.2)(conc)
+conc = layers.Dropout(0.1)(conc)
 conc = layers.Dense(1, activation='softmax')(conc)
 model = tf.keras.Model(input_layer, conc)
 
