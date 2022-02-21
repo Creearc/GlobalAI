@@ -12,6 +12,13 @@ discr_calc = MolecularDescriptorCalculator(names._names)
 
 features = []
 
+def smi_to_descriptors(smile):
+    mol = Chem.MolFromSmiles(smile)
+    descriptors = []
+    if mol:
+        descriptors = np.array(discr_calc.CalcDescriptors(mol))
+    return descriptors
+
 for elem in df['Smiles']:
     features.append(smi_to_descriptors(elem))
 
