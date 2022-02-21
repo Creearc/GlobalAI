@@ -81,7 +81,7 @@ model.compile(optimizer=tf.keras.optimizers.Adam(LR),
                       metrics=['accuracy'])
 
 training_dataset = input_fn(features=X.values,
-                    labels=Y,
+                    labels=y,
                     shuffle=True,
                     num_epochs=EPOCHS,
                     batch_size=BATCH_SIZE)
