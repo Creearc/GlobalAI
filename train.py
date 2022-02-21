@@ -61,42 +61,46 @@ for elem in df['Smiles']:
 train = pd.DataFrame(data = features, columns=names._names)
 train['Active'] = df['Active'].apply(lambda x: 1 if x else 0)
 
-print(train.shape[0])
+print(train)
+train = train.sample(frac=1)
+print(train)
+
+l = train.shape[0]
 
 X = train.iloc[:,:-1]
 y = train.iloc[:,-1]
 
 
-input_layer = layers.Input(shape=192)
-conc = layers.Dense(192*2, activation='tanh')(input_layer)
-conc = layers.Dense(192, activation='tanh')(conc)
-conc = layers.Dense(1, activation='softmax')(conc)
-model = tf.keras.Model(input_layer, conc)
-
-model.summary()
-
-BATCH_SIZE = 32
-
-EPOCHS = 10
-LR = 1e-5
-model.compile(optimizer=tf.keras.optimizers.Adam(LR),
-                      loss='binary_crossentropy',
-                      metrics=['accuracy'])
-
-training_dataset = input_fn(features=train_X.values,
-                    labels=train_y,
-                    shuffle=True,
-                    num_epochs=EPOCHS,
-                    batch_size=BATCH_SIZE)
-
-validation_dataset = input_fn(features=eval_X.values,
-                    labels=eval_y,
-                    shuffle=False,
-                    num_epochs=EPOCHS,
-                    batch_size=num_eval_examples)
-
-model.fit(training_dataset,
-          steps_per_epoch=len(training_dataset),
-          epochs=EPOCHS,
-          validation_data=training_dataset,
-          validation_steps=len(training_dataset))
+##input_layer = layers.Input(shape=192)
+##conc = layers.Dense(192*2, activation='tanh')(input_layer)
+##conc = layers.Dense(192, activation='tanh')(conc)
+##conc = layers.Dense(1, activation='softmax')(conc)
+##model = tf.keras.Model(input_layer, conc)
+##
+##model.summary()
+##
+##BATCH_SIZE = 32
+##
+##EPOCHS = 10
+##LR = 1e-5
+##model.compile(optimizer=tf.keras.optimizers.Adam(LR),
+##                      loss='binary_crossentropy',
+##                      metrics=['accuracy'])
+##
+##training_dataset = input_fn(features=train_X.values,
+##                    labels=train_y,
+##                    shuffle=True,
+##                    num_epochs=EPOCHS,
+##                    batch_size=BATCH_SIZE)
+##
+##validation_dataset = input_fn(features=eval_X.values,
+##                    labels=eval_y,
+##                    shuffle=False,
+##                    num_epochs=EPOCHS,
+##                    batch_size=num_eval_examples)
+##
+##model.fit(training_dataset,
+##          steps_per_epoch=len(training_dataset),
+##          epochs=EPOCHS,
+##          validation_data=training_dataset,
+##          validation_steps=len(training_dataset))
